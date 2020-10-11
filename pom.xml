@@ -4,26 +4,24 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>2.11</version>
+        <version>4.4</version>
+        <relativePath />
     </parent>
     <groupId>ntou.david.dismessenger</groupId>
     <artifactId>dismessenger</artifactId>
     <version>1.0</version>
     <packaging>hpi</packaging>
     <properties>
-        <jenkins.version>1.625.3</jenkins.version>
+        <revision>1.0</revision>
+        <changelist>-SNAPSHOT</changelist>
+
+        <!-- Baseline Jenkins version you use to build the plugin. Users must have this version or newer to run. -->
+        <jenkins.version>2.235.1</jenkins.version>
         <java.level>8</java.level>
-        <jenkins-test-harness.version>2.13</jenkins-test-harness.version>
-        <enforce.skip>true</enforce.skip>
     </properties>
     <name>DiscordMessenger</name>
     <description>Send Message to Discord channel</description>
-    <licenses>
-        <license>
-            <name>MIT License</name>
-            <url>https://opensource.org/licenses/MIT</url>
-        </license>
-    </licenses>
+
     <!-- Assuming you want to host on @jenkinsci:
     <url>https://wiki.jenkins.io/display/JENKINS/TODO+Plugin</url>
     <scm>
@@ -32,67 +30,49 @@
         <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
     </scm>
     -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <!-- Pick up common dependencies for the selected LTS line: https://github.com/jenkinsci/bom#usage -->
+                <groupId>io.jenkins.tools.bom</groupId>
+                <artifactId>bom-2.235.x</artifactId>
+                <version>11</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+
     <dependencies>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>structs</artifactId>
-            <version>1.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-step-api</artifactId>
-            <version>2.12</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-cps</artifactId>
-            <version>2.39</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-job</artifactId>
-            <version>2.11.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-basic-steps</artifactId>
-            <version>2.6</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-durable-task-step</artifactId>
-            <version>2.13</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-api</artifactId>
-            <version>2.20</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-support</artifactId>
-            <version>2.14</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.rabbitmq</groupId>
-            <artifactId>amqp-client</artifactId>
-            <version>5.9.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>junit</artifactId>
-            <version>1.2-beta-4</version>
         </dependency>
     </dependencies>
+
+
     <repositories>
         <repository>
             <id>repo.jenkins-ci.org</id>

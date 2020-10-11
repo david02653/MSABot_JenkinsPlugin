@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Group-Id: ntou.david.dismessenger
+Short-Name: dismessenger
+Long-Name: DiscordMessenger
+Minimum-Java-Version: 1.8
+Plugin-Version: 1.0
+Hudson-Version: 2.235.1
+Jenkins-Version: 2.235.1
+Plugin-Dependencies: structs:1.20
+Plugin-Developers: 
+Plugin-ScmUrl: https://github.com/jenkinsci/plugin-pom/dismessenger
+Libraries: /home/otonashi/Desktop/Workspace/Jenkins/discord/src/main/r
+ esources,/home/otonashi/Desktop/Workspace/Jenkins/discord/target/clas
+ ses
+Resource-Path: /home/otonashi/Desktop/Workspace/Jenkins/discord/src/ma
+ in/webapp
+
