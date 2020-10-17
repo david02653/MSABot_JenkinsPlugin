@@ -51,9 +51,14 @@ public class MessagePublisher extends Notifier {
 
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Publisher>{
-        public FormValidation doCheckchannel(@QueryParameter String value) throws IOException, ServletException {
+        public FormValidation doCheckChannel(@QueryParameter String value, @QueryParameter String routingKey) throws IOException, ServletException {
             if(value.length() == 0){
-                return FormValidation.error("please enter your target channel");
+                //return FormValidation.error("please enter your target channel");
+                return FormValidation.error(Messages.MessagePublisher_error_missingChannel());
+            }
+            if(routingKey.length() == 0){
+                //return FormValidation.error("no routing found.");
+                return FormValidation.error(Messages.MessagePublisher_error_missingRoutingKey());
             }
             return FormValidation.ok();
         }
@@ -65,7 +70,8 @@ public class MessagePublisher extends Notifier {
 
         @Override
         public String getDisplayName(){
-            return "Discord Messenger";
+            //return "Discord Messenger";
+            return Messages.MessagePublisher_DisplayName();
         }
     }
 }
