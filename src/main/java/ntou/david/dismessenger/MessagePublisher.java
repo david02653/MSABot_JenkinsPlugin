@@ -104,7 +104,7 @@ public class MessagePublisher extends Notifier {
         listener.getLogger().println("Data : " + build.getRootDir().getAbsolutePath());
         listener.getLogger().println("Build_URL : " + BUILD_URL);
 
-        if(control.sendMessage(object.toString(), routingKey)){
+        if(control.sendMessage(object.toString(), routingKey, listener)){
             listener.getLogger().println("Message Sending Success !");
         }else{
             listener.getLogger().println("Message Sending Failed !");
