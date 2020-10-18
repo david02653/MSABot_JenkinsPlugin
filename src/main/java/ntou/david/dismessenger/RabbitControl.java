@@ -23,7 +23,7 @@ public class RabbitControl {
         StringWriter err = new StringWriter();
 
         try(Connection connection = factory.newConnection(); Channel channel = connection.createChannel()){
-            channel.exchangeDeclare(EXCHANGE_NAME, "topic");
+            channel.exchangeDeclare(EXCHANGE_NAME, "topic", true);
 
             channel.basicPublish(EXCHANGE_NAME, routingKey, null, content.getBytes("UTF-8"));
             System.out.println("[x] Sent '" + routingKey + "':'"+ content + "'");
