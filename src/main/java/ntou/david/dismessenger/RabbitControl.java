@@ -26,8 +26,8 @@ public class RabbitControl {
         try(Connection connection = factory.newConnection(); Channel channel = connection.createChannel()){
             channel.exchangeDeclare(EXCHANGE_NAME, "topic", true);
 
-//            channel.basicPublish(EXCHANGE_NAME, routingKey, null, content.getBytes("UTF-8"));
-            channel.basicPublish(EXCHANGE_NAME, routingKey, new AMQP.BasicProperties("text/plain", "UTF-8", null, null, null, null, null, null, null, null, null, null, null, null), content.getBytes("UTF-8"));
+            channel.basicPublish(EXCHANGE_NAME, routingKey, null, content.getBytes("UTF-8"));
+//            channel.basicPublish(EXCHANGE_NAME, routingKey, new AMQP.BasicProperties("text/plain", "UTF-8", null, null, null, null, null, null, null, null, null, null, null, null), content.getBytes("UTF-8"));
             System.out.println("[x] Sent '" + routingKey + "':'"+ content + "'");
             listener.getLogger().println("sent: " + content);
             return true;
