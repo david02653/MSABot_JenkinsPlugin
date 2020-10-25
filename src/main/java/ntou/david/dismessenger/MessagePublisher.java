@@ -156,14 +156,14 @@ public class MessagePublisher extends Notifier {
 
         public FormValidation doCheckHost(@QueryParameter String value) throws IOException, ServletException {
             if(value.length() == 0){
-                return FormValidation.error("missing host");
+                return FormValidation.error(Messages.MessagePublisher_error_missingMQHost());
             }
             return FormValidation.ok();
         }
 
         public FormValidation doCheckPort(@QueryParameter String value) throws IOException, ServletException {
             if(value.length() == 0){
-                return FormValidation.error("missing port");
+                return FormValidation.error(Messages.MessagePublisher_error_missingMQPort());
             }
             return FormValidation.ok();
         }
