@@ -15,11 +15,13 @@ public class RabbitControl {
 
     private static final String EXCHANGE_NAME = "jenkins";
 
-    public static boolean sendMessage(String content, String routingKey, BuildListener listener){
+    public static boolean sendMessage(String content, String routingKey, String host, String port, BuildListener listener){
 
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("140.121.197.130");
-        factory.setPort(9050);
+//        factory.setHost("140.121.197.130");
+//        factory.setPort(9050);
+        factory.setHost(host);
+        factory.setPort(Integer.parseInt(port));
 
         StringWriter err = new StringWriter();
 

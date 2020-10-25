@@ -1,5 +1,6 @@
 package ntou.david.dismessenger;
 
+import groovy.json.internal.IO;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.Launcher;
@@ -29,12 +30,17 @@ public class MessagePublisher extends Notifier {
     private final String channel;
     private final String routingKey;
 
+    private final String mqHost;
+    private final String mqPort;
+
     private RabbitControl control = new RabbitControl();
 
     @DataBoundConstructor
-    public MessagePublisher(String channel, String routingKey){
+    public MessagePublisher(String channel, String routingKey, String mqHost, String mqPort){
         this.channel = channel;
         this.routingKey = routingKey;
+        this.mqHost = mqHost;
+        this.mqPort = mqPort;
     }
 
     public String getChannel(){
@@ -42,6 +48,12 @@ public class MessagePublisher extends Notifier {
     }
     public String getRoutingKey(){
         return routingKey;
+    }
+    public String getMqHost(){
+        return mqHost;
+    }
+    public String getMqPort(){
+        return mqPort;
     }
 
     private String getResultAsString(Result result){
@@ -63,6 +75,8 @@ public class MessagePublisher extends Notifier {
 
         listener.getLogger().println("your channel is "+ channel);
         listener.getLogger().println("your routing key is " + routingKey);
+        listener.getLogger().println("RabbitMQ Host at " + mqHost);
+        listener.getLogger().println("RabbitMQ Port is " + mqPort);
 
         // create JSON format return message
         JSONObject object = new JSONObject();
@@ -104,7 +118,7 @@ public class MessagePublisher extends Notifier {
         listener.getLogger().println("Data : " + build.getRootDir().getAbsolutePath());
         listener.getLogger().println("Build_URL : " + BUILD_URL);
 
-        if(control.sendMessage(object.toString(), routingKey, listener)){
+        if(control.sendMessage(object.toString(), routingKey, mqHost, mqPort, listener)){
             listener.getLogger().println("Message Sending Success !");
         }else{
             listener.getLogger().println("Message Sending Failed !");
@@ -115,14 +129,41 @@ public class MessagePublisher extends Notifier {
 
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Publisher>{
-        public FormValidation doCheckChannel(@QueryParameter String value, @QueryParameter String routingKey) throws IOException, ServletException {
+//        public FormValidation doCheckChannel(@QueryParameter String value, @QueryParameter String routingKey) throws IOException, ServletException {
+//            if(value.length() == 0){
+//                //return FormValidation.error("please enter your target channel");
+//                return FormValidation.error(Messages.MessagePublisher_error_missingChannel());
+//            }
+//            if(routingKey.length() == 0){
+//                //return FormValidation.error("no routing found.");
+//                return FormValidation.error(Messages.MessagePublisher_error_missingRoutingKey());
+//            }
+//            return FormValidation.ok();
+//        }
+        public FormValidation doCheckChannel(@QueryParameter String value) throws IOException, ServletException {
             if(value.length() == 0){
-                //return FormValidation.error("please enter your target channel");
                 return FormValidation.error(Messages.MessagePublisher_error_missingChannel());
             }
-            if(routingKey.length() == 0){
-                //return FormValidation.error("no routing found.");
+            return FormValidation.ok();
+        }
+
+        public FormValidation doCheckRoutingKey(@QueryParameter String value) throws IOException, ServletException {
+            if(value.length() == 0){
                 return FormValidation.error(Messages.MessagePublisher_error_missingRoutingKey());
+            }
+            return FormValidation.ok();
+        }
+
+        public FormValidation doCheckHost(@QueryParameter String value) throws IOException, ServletException {
+            if(value.length() == 0){
+                return FormValidation.error("missing host");
+            }
+            return FormValidation.ok();
+        }
+
+        public FormValidation doCheckPort(@QueryParameter String value) throws IOException, ServletException {
+            if(value.length() == 0){
+                return FormValidation.error("missing port");
             }
             return FormValidation.ok();
         }
