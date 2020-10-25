@@ -29,18 +29,17 @@ public class MessagePublisher extends Notifier {
 
     private final String channel;
     private final String routingKey;
-
-    private final String host;
-    private final int port;
+    private final String mqHost;
+    private final int mqPort;
 
     private RabbitControl control = new RabbitControl();
 
     @DataBoundConstructor
-    public MessagePublisher(String channel, String routingKey, String host, int port){
+    public MessagePublisher(String channel, String routingKey, String mqHost, int mqPort){
         this.channel = channel;
         this.routingKey = routingKey;
-        this.host = host;
-        this.port = port;
+        this.mqHost = mqHost;
+        this.mqPort = mqPort;
     }
 
     public String getChannel(){
@@ -50,10 +49,10 @@ public class MessagePublisher extends Notifier {
         return routingKey;
     }
     public String getMqHost(){
-        return host;
+        return mqHost;
     }
     public int getMqPort(){
-        return port;
+        return mqPort;
     }
 
     private String getResultAsString(Result result){
@@ -75,8 +74,8 @@ public class MessagePublisher extends Notifier {
 
         listener.getLogger().println("your channel is "+ channel);
         listener.getLogger().println("your routing key is " + routingKey);
-        listener.getLogger().println("RabbitMQ Host at " + host);
-        listener.getLogger().println("RabbitMQ Port is " + port);
+        listener.getLogger().println("RabbitMQ Host at " + mqHost);
+        listener.getLogger().println("RabbitMQ Port is " + mqPort);
 
         // create JSON format return message
         JSONObject object = new JSONObject();
@@ -118,7 +117,7 @@ public class MessagePublisher extends Notifier {
         listener.getLogger().println("Data : " + build.getRootDir().getAbsolutePath());
         listener.getLogger().println("Build_URL : " + BUILD_URL);
 
-        if(control.sendMessage(object.toString(), routingKey, host, port, listener)){
+        if(control.sendMessage(object.toString(), routingKey, mqHost, mqPort, listener)){
             listener.getLogger().println("Message Sending Success !");
         }else{
             listener.getLogger().println("Message Sending Failed !");
@@ -154,15 +153,15 @@ public class MessagePublisher extends Notifier {
             return FormValidation.ok();
         }
 
-        public FormValidation doCheckHost(@QueryParameter String value) throws IOException, ServletException {
+        public FormValidation doCheckMqHost(@QueryParameter String value) throws IOException, ServletException {
             if(value.length() == 0){
                 return FormValidation.error(Messages.MessagePublisher_error_missingMQHost());
             }
             return FormValidation.ok();
         }
 
-        public FormValidation doCheckPort(@QueryParameter int value) throws IOException, ServletException {
-            if(value <= 0){
+        public FormValidation doCheckMqPost(@QueryParameter String value) throws IOException, ServletException {
+            if(value.length() == 0){
                 return FormValidation.error(Messages.MessagePublisher_error_missingMQPort());
             }
             return FormValidation.ok();

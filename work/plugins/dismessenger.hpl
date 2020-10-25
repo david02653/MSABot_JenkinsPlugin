@@ -6,12 +6,17 @@ Minimum-Java-Version: 1.8
 Plugin-Version: 1.0
 Hudson-Version: 2.235.1
 Jenkins-Version: 2.235.1
-Plugin-Dependencies: structs:1.20
+Plugin-Dependencies: junit:1.29,structs:1.20
 Plugin-Developers: 
 Plugin-ScmUrl: https://github.com/jenkinsci/plugin-pom/dismessenger
-Libraries: /home/otonashi/Desktop/Workspace/Jenkins/discord/src/main/r
- esources,/home/otonashi/Desktop/Workspace/Jenkins/discord/target/clas
- ses
-Resource-Path: /home/otonashi/Desktop/Workspace/Jenkins/discord/src/ma
- in/webapp
+Libraries: C:\Users\otonashi\Desktop\tmp_proj\MSABot_myVersion\MSABot_
+ JenkinsPlugin\src\main\resources,C:\Users\otonashi\Desktop\tmp_proj\M
+ SABot_myVersion\MSABot_JenkinsPlugin\target\classes,C:\Users\otonashi
+ \.m2\repository\com\rabbitmq\amqp-client\5.9.0\amqp-client-5.9.0.jar,
+ C:\Users\otonashi\.m2\repository\org\json\json\20180813\json-20180813
+ .jar,C:\Users\otonashi\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4
+ j-api-1.7.30.jar,C:\Users\otonashi\.m2\repository\org\w3c\dom\2.3.0-j
+ axb-1.0.6\dom-2.3.0-jaxb-1.0.6.jar
+Resource-Path: C:\Users\otonashi\Desktop\tmp_proj\MSABot_myVersion\MSA
+ Bot_JenkinsPlugin\src\main\webapp
 

@@ -6,10 +6,10 @@
     <f:entry title="${%Channel}" field="channel">
         <f:textbox />
     </f:entry>
-    <f:entry title="${%Host}" field="host">
+    <f:entry title="${%Host}" field="mqHost">
         <f:textbox />
     </f:entry>
-    <f:entry title="${%Port}" field="port">
+    <f:entry title="${%Port}" field="mqPort">
         <f:textbox />
     </f:entry>
 </j:jelly>
