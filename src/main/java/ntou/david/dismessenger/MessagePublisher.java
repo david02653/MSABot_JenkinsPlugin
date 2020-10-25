@@ -30,17 +30,17 @@ public class MessagePublisher extends Notifier {
     private final String channel;
     private final String routingKey;
 
-    private final String mqHost;
-    private final int mqPort;
+    private final String host;
+    private final int port;
 
     private RabbitControl control = new RabbitControl();
 
     @DataBoundConstructor
-    public MessagePublisher(String channel, String routingKey, String mqHost, int mqPort){
+    public MessagePublisher(String channel, String routingKey, String host, int port){
         this.channel = channel;
         this.routingKey = routingKey;
-        this.mqHost = mqHost;
-        this.mqPort = mqPort;
+        this.host = host;
+        this.port = port;
     }
 
     public String getChannel(){
@@ -50,10 +50,10 @@ public class MessagePublisher extends Notifier {
         return routingKey;
     }
     public String getMqHost(){
-        return mqHost;
+        return host;
     }
     public int getMqPort(){
-        return mqPort;
+        return port;
     }
 
     private String getResultAsString(Result result){
@@ -75,8 +75,8 @@ public class MessagePublisher extends Notifier {
 
         listener.getLogger().println("your channel is "+ channel);
         listener.getLogger().println("your routing key is " + routingKey);
-        listener.getLogger().println("RabbitMQ Host at " + mqHost);
-        listener.getLogger().println("RabbitMQ Port is " + mqPort);
+        listener.getLogger().println("RabbitMQ Host at " + host);
+        listener.getLogger().println("RabbitMQ Port is " + port);
 
         // create JSON format return message
         JSONObject object = new JSONObject();
@@ -118,7 +118,7 @@ public class MessagePublisher extends Notifier {
         listener.getLogger().println("Data : " + build.getRootDir().getAbsolutePath());
         listener.getLogger().println("Build_URL : " + BUILD_URL);
 
-        if(control.sendMessage(object.toString(), routingKey, mqHost, mqPort, listener)){
+        if(control.sendMessage(object.toString(), routingKey, host, port, listener)){
             listener.getLogger().println("Message Sending Success !");
         }else{
             listener.getLogger().println("Message Sending Failed !");
