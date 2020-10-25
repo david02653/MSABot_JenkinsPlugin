@@ -31,12 +31,12 @@ public class MessagePublisher extends Notifier {
     private final String routingKey;
 
     private final String mqHost;
-    private final String mqPort;
+    private final int mqPort;
 
     private RabbitControl control = new RabbitControl();
 
     @DataBoundConstructor
-    public MessagePublisher(String channel, String routingKey, String mqHost, String mqPort){
+    public MessagePublisher(String channel, String routingKey, String mqHost, int mqPort){
         this.channel = channel;
         this.routingKey = routingKey;
         this.mqHost = mqHost;
@@ -52,7 +52,7 @@ public class MessagePublisher extends Notifier {
     public String getMqHost(){
         return mqHost;
     }
-    public String getMqPort(){
+    public int getMqPort(){
         return mqPort;
     }
 
@@ -161,8 +161,8 @@ public class MessagePublisher extends Notifier {
             return FormValidation.ok();
         }
 
-        public FormValidation doCheckPort(@QueryParameter String value) throws IOException, ServletException {
-            if(value.length() == 0){
+        public FormValidation doCheckPort(@QueryParameter int value) throws IOException, ServletException {
+            if(value <= 0){
                 return FormValidation.error(Messages.MessagePublisher_error_missingMQPort());
             }
             return FormValidation.ok();
